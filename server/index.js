@@ -47,7 +47,10 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  // Access Form Data uses the POST method from the req body.
  // Tell Express that you want to access POST Request body
  // Setup   app.use(express.urlencoded({extended:true}))
- 
+ app.get('/dashboard', (req, res)=>
+ {
+   res.render('dashboard')
+ })
 
  app.get('/login', (req, res)=>{
    // user template placed inside the views directory
@@ -78,8 +81,6 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
                             email:req.body.email,
                             password:req.body.password})
       }
-    
-    res.end();
   })
     
  
