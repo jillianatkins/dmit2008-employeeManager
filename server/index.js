@@ -6,6 +6,7 @@ const express = require('express');
 // import the path utils from Node.
 const path = require('path')
 const cors = require('cors')
+const cookieSession = require('cookie-session')
 
 // Importing our Login Service Used With the POST Login Route
 const loginService = require('./services/loginService')
@@ -29,6 +30,12 @@ app.use(cors())
  app.use(express.urlencoded({extended:true}))
  app.use(express.json())
 
+ // Session middleware
+ app.use(cookieSession({
+   name:"session",
+   keys:['SDFLU9iw2308dlsfuwe2adfl', 'LDFA34gsdfgFOPW2323DA7FS2']
+ }))
+
  // Setup Template Engine
  app.set('view engine', 'ejs')
  app.set('views', path.join(__dirname, './views'))
@@ -49,7 +56,14 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  // Setup   app.use(express.urlencoded({extended:true}))
  app.get('/dashboard', (req, res)=>
  {
-   res.render('dashboard')
+    // if the session is still valid IE: user has not closed the browser
+    if(req.session.isValid){
+      res.render('dashboard')
+    }
+    // if the session is not valid, redirect user to login again
+    else{
+      res.redirect('/login')
+    }
  })
 
  app.get('/login', (req, res)=>{
@@ -70,6 +84,10 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
       //if the isValidUser.user property has a user returned
       if(isValidUser.user !== null){
+        // set a session value isValid
+        if(!req.session.isValid){
+          req.session.isValid = true;
+        }
         res.redirect('dashboard')
       }
       // if isValidUser.user property === null, render login page with error messages
