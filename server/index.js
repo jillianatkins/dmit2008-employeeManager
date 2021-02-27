@@ -72,6 +72,12 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    res.render('login', {passwordWarning:"", emailWarning:"", email:"", password:""})
 
  })
+
+ // route to signup page
+ app.get('/signup', (req, res)=>{
+   res.render('signup')
+ })
+
  app.post('/login', (req, res)=>{
    // if your incomming name value pairs are alot then create an object
     const credentials = {
