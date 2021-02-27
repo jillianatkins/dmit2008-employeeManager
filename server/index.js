@@ -80,7 +80,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // route to signup page
  app.get('/signup', (req, res)=>{
-   res.render('signup', {emailWarning:"", username:"", newEmail:"", password:"", userID:""})
+   res.render('signup', {emailWarning:"", username:"", email:"", password:"", userID:""})
  })
 
 
@@ -92,7 +92,7 @@ app.post('/signup', (req, res)=>{
   const credentials = {
     // trim whitespace on input fields
     username:req.body.username.trim(),
-    newEmail:req.body.newEmail.trim(),
+    email:req.body.email.trim(),
     password:req.body.password.trim(),
     // generate random user id
     userID:uuidv4()
@@ -100,19 +100,18 @@ app.post('/signup', (req, res)=>{
 
   // check if signup process is valid or not
   const isValidSignUp = signupService.authenticate(credentials)
-  console.log(isValidSignUp)
     // if signup is valid, write data to file and redirect to login page
     //console.log(isValidSignUp)
-    if(isValidSignUp.validEmail === true){
-      //fileService.writeFileContents('../data/users.json', credentials);
+    if(isValidSignUp === true){
+      fileService.writeFileContents('../data/users.json', credentials);
       res.redirect('login')
     }
     // if signup in invalid (duplicate email), render error message
-    if(isValidSignUp.validEmail !== true){
+    if(isValidSignUp !== true){
     // render error message, leave all fields filled out
     res.render('signup', {emailWarning:isValidSignUp,
                             username:req.body.username,
-                            newEmail:req.body.newEmail, 
+                            email:req.body.email, 
                             password:req.body.password, 
                             userID:credentials.userID})
     }
