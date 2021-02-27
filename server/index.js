@@ -11,8 +11,6 @@ const cookieSession = require('cookie-session')
 // Importing our Login Service Used With the POST Login Route
 const loginService = require('./services/loginService')
 
-
-
 // create an instance of express
 const app = express()
  
@@ -75,7 +73,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // route to signup page
  app.get('/signup', (req, res)=>{
-   res.render('signup')
+   res.render('signup', {emailDupWarning:"", fullName:"", email:"", password:""})
  })
 
  app.post('/login', (req, res)=>{

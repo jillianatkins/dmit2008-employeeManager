@@ -20,17 +20,19 @@
           <form id="register">
        
             <div class="form-control">
-                <label for="fullname">Please enter your full name.</label>
-                <input id="fullname" type="text" name="fullname" placeholder="first and last name" value="jim foley"/>
+                <label for="fullname">Please enter your full name</label>
+                <input id="fullname" type="text" name="fullname" placeholder="first and last name" required value="<%-fullName%>"/>
             </div>
               <div class="form-control">
-                  <label for="email">Enter an valid email address</label>
-                  <input id="email" type="text" name="email" placeholder="email address for the account" value="email@workspace.com"/>
+                  <label for="email">A user with that email already exists
+                    <span class="warning"><%- emailDupWarning %></span></label>
+                  </label>
+                  <input id="email" type="email" name="email" placeholder="user@email.com" required value="<%-email%>"/>
               </div>
 
               <div class="form-control">
                 <label for="password">Enter a secure password</label>
-                <input id="password" type="text" name="password" placeholder="password for the account" value="temp"/>
+                <input id="password" type="text" name="password" placeholder="password for the account" required value="<%-password%>"/>
             </div>
 
             <div class="form-control">
