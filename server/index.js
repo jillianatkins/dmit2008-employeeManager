@@ -120,6 +120,16 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  
  })
 
+ // complete the signup process
+ app.post('/signup', (req, res)=>{
+   // create object with name value pairs
+   const credentials = {
+     username:req.body.username.trim(),
+     email:req.body.email,
+     password:req.body.password
+   }
+ })
+
  
 
 // Final Middleware 

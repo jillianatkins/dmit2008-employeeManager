@@ -28,12 +28,6 @@ exports.authenticate = (data)=>{
  
     }, {validEmail:false, user:null})
  
-     // ternary opertoar   ()?true:false
-     // if() else
-     // truthy falsy
-    // const auth0 = authSignup.user.email ? {user:authUser.user}: formatErrors(authUser);
-    // return auth0
- 
  }
   
  const formatErrors = function(authObj){
