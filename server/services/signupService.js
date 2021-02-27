@@ -8,32 +8,33 @@
 const fileService = require('./fileService')
 
 exports.authenticate = (data)=>{
- 
-    const {username, email, password} = {...data}
-    // trim leading/trailing whitespace
-    // username = username.trim();
-    // email = email.trim();
-    // password = password.trim();
-
+    const email = data.newEmail
     const users = fileService.getFileContents('../data/users.json', data);
-    // flush the authentication
-    
+
   const authSignup =  users.reduce((authObj, user)=>{
       // check if the email entered already has an existing user attached to it
      if(user.email === email){
        authObj.validEmail = false;
      }
-          
      return authObj
- 
-    }, {validEmail:false, user:null})
- 
- }
-  
+    }, {validEmail:true})
+
+    // ternary opertoar   ()?true:false
+    // if() else
+    // truthy falsy
+    const auth0 = authSignup.validEmail ? authSignup.validEmail: formatErrors(authSignup);
+    // return TRUE if email does not exist, or return error message
+    return auth0
+
+    //return authSignup
+ } 
+
  const formatErrors = function(authObj){
    let emailWarning = ""
  
-   if(user.validEmail === false){ emailWarning= `a user with that email already exists`}
+   if(authObj.validEmail === false){ 
+       emailWarning= "a user with that email already exists"
+    }
  
    return emailWarning
  }

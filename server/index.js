@@ -11,6 +11,13 @@ const cookieSession = require('cookie-session')
 // Importing our Login Service Used With the POST Login Route
 const loginService = require('./services/loginService')
 
+// Import the random UUID
+const { v4: uuidv4 } = require('uuid');
+
+// Import signupService & fileService
+const fileService = require('./services/fileService')
+const signupService = require('./services/signupService')
+
 // create an instance of express
 const app = express()
  
@@ -73,8 +80,43 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // route to signup page
  app.get('/signup', (req, res)=>{
-   res.render('signup', {emailDupWarning:"", fullName:"", email:"", password:""})
+   res.render('signup', {emailWarning:"", username:"", newEmail:"", password:"", userID:""})
  })
+
+
+// ******************************
+// ******* SIGNUP PROCESS *******
+// ******************************
+app.post('/signup', (req, res)=>{
+  // create object with name value pairs
+  const credentials = {
+    // trim whitespace on input fields
+    username:req.body.username.trim(),
+    newEmail:req.body.newEmail.trim(),
+    password:req.body.password.trim(),
+    // generate random user id
+    userID:uuidv4()
+  }
+
+  // check if signup process is valid or not
+  const isValidSignUp = signupService.authenticate(credentials)
+  console.log(isValidSignUp)
+    // if signup is valid, write data to file and redirect to login page
+    //console.log(isValidSignUp)
+    if(isValidSignUp.validEmail === true){
+      //fileService.writeFileContents('../data/users.json', credentials);
+      res.redirect('login')
+    }
+    // if signup in invalid (duplicate email), render error message
+    if(isValidSignUp.validEmail !== true){
+    // render error message, leave all fields filled out
+    res.render('signup', {emailWarning:isValidSignUp,
+                            username:req.body.username,
+                            newEmail:req.body.newEmail, 
+                            password:req.body.password, 
+                            userID:credentials.userID})
+    }
+})
 
  app.post('/login', (req, res)=>{
    // if your incomming name value pairs are alot then create an object
@@ -112,25 +154,12 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
      email:req.body.email,
      password:req.body.password
     }
-    
-    
     const isValidUser = loginService.authenticate(credentials)
    
     res.end()
  
  })
 
- // complete the signup process
- app.post('/signup', (req, res)=>{
-   // create object with name value pairs
-   const credentials = {
-     username:req.body.username.trim(),
-     email:req.body.email,
-     password:req.body.password
-   }
- })
-
- 
 
 // Final Middleware 
 // Catch all for any request not handled while express was
