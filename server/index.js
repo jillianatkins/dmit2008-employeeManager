@@ -101,10 +101,10 @@ app.post('/signup', (req, res)=>{
   // check if signup process is valid or not
   const isValidSignUp = signupService.authenticate(credentials)
     // if signup is valid, write data to file and redirect to login page
-    //console.log(isValidSignUp)
+    console.log(isValidSignUp)
     if(isValidSignUp === true){
-      fileService.writeFileContents('../data/users.json', credentials);
-      res.redirect('login')
+      // fileService.writeFileContents('../data/users.json', credentials);
+      // res.redirect('login')
     }
     // if signup in invalid (duplicate email), render error message
     if(isValidSignUp !== true){

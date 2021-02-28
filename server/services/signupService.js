@@ -8,7 +8,7 @@
 const fileService = require('./fileService')
 
 exports.authenticate = (data)=>{
-    const email = data.newEmail
+    const email = data.email
     const users = fileService.getFileContents('../data/users.json', data);
 
   const authSignup =  users.reduce((authObj, user)=>{
