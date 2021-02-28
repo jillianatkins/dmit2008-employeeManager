@@ -1,10 +1,12 @@
 # Employee Manager
+This app is a work in progress, functionality is still being implemented.
 
 ### App Description
 This app allows a user to register, log in, and view an employee dashboard.
 - Built with Express.JS, EJS, and Node
 - Does not currently access a database, user information is in a JSON document
-- Data validation included to prevent duplicate users from registering with the same email
+- Registration form does not allow any empty fields (client side validation)
+- Other data validation included to prevent duplicate users from registering with the same email
 - Unique user IDs are generated (and stored) via UUID after the registration processes is completed
 - Employee Dashboard is protected (using cookie sessions) and a user must be logged in to access it
 
@@ -19,13 +21,9 @@ This app allows a user to register, log in, and view an employee dashboard.
 - If the email and/or password does not match those currently in the system, appropriate error messages will be displayed.
 - After successfully logging in, you will be redirected to the employee dashboard.
 
-### Functionality in progress
+### Functionality in Progress
 - Users page (to display list of current users and their relevant information)
 - Employee Dashboard
-
-
- 
-
 
  
   
