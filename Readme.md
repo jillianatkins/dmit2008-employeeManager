@@ -1,6 +1,8 @@
 # Employee Manager
 This app is a work in progress, functionality is still being implemented.
 
+### Live App: https://jatkins-employee-manager.herokuapp.com/
+
 ### App Description
 This app allows a user to register, log in, and view an employee dashboard.
 - Built with Express.JS, EJS, and Node
